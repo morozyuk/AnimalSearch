@@ -1,0 +1,121 @@
+﻿body {
+    padding-bottom: 20px;
+    font-family: 'Lato', sans-serif;
+}
+
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+input,
+select,
+textarea {
+    width: 250px;
+    height: 30px;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+.actionName {
+    margin-left: 5%;
+    float: left;
+}
+
+#form1 {
+    margin-top: 0.7%;
+    margin-left: 12.2%;
+}
+
+.buttonSearch {
+    background-color: lightgrey;
+    border: none;
+    height: 31px;
+    width: 150px;
+}
+.buttonSearch:hover{
+    background-color:grey;
+}
+
+.Otherbutton {
+    background-color: lightgrey;
+    border: none;
+    margin: 15px 10px 10px;
+    float: left;
+    width: 200px;
+    height: 50px;
+}
+.Otherbutton:hover{
+    background-color:grey;
+}
+
+.actionButtons {
+    display: flex;
+    justify-content: center;
+}
+
+.tableContainer {
+    display: flex;
+    justify-content: center;
+    margin: 3%;
+}
+
+.databaseContent {
+    width: 80%;
+    border: 1.5px solid black;
+    padding: 10px;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+#googleMap {
+    width: 100%;
+    height: 500px;
+}
+
+.infoWindowTitle {
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.infoWindowContent {
+    font-family: 'Lato', sans-serif;
+    font-size: 17px;
+}
+.infoWindowImage{
+    height:60px;
+    width:60px;
+}
+.editCreate {
+    margin-left: 2%
+}
+.btn {
+    background-color: white;
+    color: blue;
+}
+.btn:hover{
+    color:lightblue;
+}
+.editCreatebutton {
+    border: none;
+    background-color: lightgrey;
+}
+.editCreatebutton:hover {
+    background-color: grey;
+}
+.editCreateTitle {
+    margin: 2%;
+}

@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model AnimalSearch.Models.Animal
+<h2 class="editCreateTitle">Animal № @Model.Id</h2>
+@using (Html.BeginForm("Edit", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <fieldset class="editCreate">
+        @Html.HiddenFor(m => m.Id)
+        <p>
+            @Html.LabelFor(m => m.Name, "Animal name")
+            <br />
+            @Html.EditorFor(m => m.Name)
+        </p>
+        <p>
+            @Html.LabelFor(m => m.Kind, "Kind")
+            <br />
+            @Html.EditorFor(m => m.Kind)
+
+        </p>
+
+        <p>
+            @Html.LabelFor(m => m.Breed, "Breed")
+            <br />
+            @Html.EditorFor(m => m.Breed)
+        </p>
+        <p>
+            @Html.LabelFor(m => m.Description, "Description")
+            <br />
+            @Html.EditorFor(m => m.Description)
+
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Adress, "address :")
+            <br />
+            @Html.EditorFor(model => model.Adress,
+                            new { htmlAttributes = new { @id = "address" } })
+        </p>
+        <p><input type="file" name="uploadImage" id="edit" /></p>
+
+        <p><input type="submit" value="Send" class="editCreatebutton" /></p>
+    </fieldset>
+}
+<div id="googleMap" style="width:100%;height:400px;"></div>
+<script src="~/Scripts/ForCreateEdit.js"></script>
+
+<script src='http://maps.googleapis.com/maps/api/js?v=3&sensor=false&amp;libraries=places&key=AIzaSyAhnsDNCjvjyK3f_ctrPVdXoheSq2cckmQ&callback=myMap'></script>
