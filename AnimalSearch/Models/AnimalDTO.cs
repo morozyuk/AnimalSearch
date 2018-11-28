@@ -17,7 +17,6 @@ namespace AnimalSearch.Models
         public string breed { get; set; }
         public string kind { get; set; }
         public string description { get; set; }
-        public string base64Img { get; set; }
         public string imageSrc { get; set; }
 
     }
