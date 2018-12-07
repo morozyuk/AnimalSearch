@@ -6,18 +6,20 @@ using System.Web;
 namespace AnimalSearch.Models
 {
     /// <summary>
-    /// entity framework class to set fileds in databse
+    /// is used to transfer all data into one  object
     /// </summary>
-    public class Animal 
+    public class AnimalDto
     {
+        public AnimalDto()
+        {
+        }
         public int Id { get; set; }
+        public string Address { get; set; }
         public string Name { get; set; }
-        public string Kind { get; set; }
         public string Breed { get; set; }
+        public string Kind { get; set; }
         public string Description { get; set; }
-        public string Adress { get; set; }
-        public string Path { get; set; }
-        public string Latitude { get; set; } //lat and lng added for polygon search
-        public string Longtitude { get; set; }
+        public string ImageSrc { get; set; }
+
     }
 }

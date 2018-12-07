@@ -49,20 +49,20 @@ function myMap() {// map start
             }
         });
     })
+
     // rendering data 
     render = function (animal) {
-
         // variable to fill table with data
-        var tr = '<tr id="track-' + animal.id + '">'
-            + '<td>' + animal.name + '</td>'
-            + '<td>' + animal.kind + '</td>'
-            + '<td>' + animal.breed + '</td>'
-            + '<td>' + animal.description + '</td>'
-            + '<td>' + animal.address + '</td>'
-            + '<td>' + '<img height="60px" src="' + animal.imageSrc + '"/>' + '</td>'
+        var tr = '<tr id="track-' + animal.Id + '">'
+            + '<td>' + animal.Name + '</td>'
+            + '<td>' + animal.Kind + '</td>'
+            + '<td>' + animal.Breed + '</td>'
+            + '<td>' + animal.Description + '</td>'
+            + '<td>' + animal.Address + '</td>'
+            + '<td>' + '<img height="60px" src="' + animal.ImageSrc + '"/>' + '</td>'
             + '<td>'
-            + '<button type="button" class="btn-delete btn" data=action="delete-animal" data-animalid="' + animal.id + '">Delete</button>' 
-            + '<a href="/Home/Edit?id=' + animal.id + '" class="btn" >Edit</a>'
+            + '<button type="button" class="btn-delete btn" data=action="delete-animal" data-animalid="' + animal.Id + '">Delete</button>'
+            + '<a href="/Home/Edit?id=' + animal.Id + '" class="btn" >Edit</a>'
             + '</td>'
             + '</tr>';
         //adding data into a table
@@ -70,19 +70,33 @@ function myMap() {// map start
 
         var geocoder = new google.maps.Geocoder();//  geocoder to change adress from string to lat lng
         geocoder.geocode({
-            'address': animal.address
+            'address': animal.Address
         }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 var myLatlng = results[0].geometry.location;//setting lat lng
-                //info window content creating
-                var contentString = '<h2 class="infoWindowTitle">' + "Name : " + animal.name + '</h2>' +
-                    '<h3 class="infoWindowContent">' + '<br />' + 'kind : ' + animal.kind +
-                    '<br />' + 'breed : ' + animal.breed +
-                    '<br />' + 'description : ' + animal.description +
-                    '<br />' + 'address : ' + animal.address + '</h3>'
-                    + '<img height="60px" src="' + animal.imageSrc + '"/>';
+                //setting lng and lat
+                var updateGeo = function (id, lat, lng) {
+                    $.ajax({
+                        url: "/Home/UpdateGeo",
+                        type: "post",
+                        data: { id: id, longtitude: lng, latitude: lat },
+                        success: function () {
 
-                var marker = new google.maps.Marker({//marker add
+                        }
+                    })
+                };
+                updateGeo(animal.Id,myLatlng.lat(),myLatlng.lng())
+                
+                //info window content creating
+                var contentString = '<h2 class="infoWindowTitle">' + "Name : " + animal.Name + '</h2>' +
+                    '<h3 class="infoWindowContent">' + '<br />' + 'kind : ' + animal.Kind +
+                    '<br />' + 'breed : ' + animal.Breed +
+                    '<br />' + 'description : ' + animal.Description +
+                    '<br />' + 'address : ' + animal.Address + '</h3>'
+                    + '<img height="60px" src="' + animal.ImageSrc + '"/>';
+
+                //marker adding
+                var marker = new google.maps.Marker({
                     map: map,
                     position: myLatlng,
                     title: animal.name,
@@ -90,14 +104,16 @@ function myMap() {// map start
                 });
                 markersArray.push(marker);
 
-                var circle = new google.maps.Circle({//adding circle around the marker
+                //adding circle around the marker
+                var circle = new google.maps.Circle({
                     map: map,
                     radius: 100,
                     fillColor: '#AA0000'
                 });
                 circle.bindTo('center', marker, 'position');
 
-                infoWindow = new google.maps.InfoWindow({ content: contentString });//adding info window
+                //adding info window
+                infoWindow = new google.maps.InfoWindow({ content: contentString });
                 google.maps.event.addListener(marker, 'click', function () {
                     infoWindow.setContent(this.info);
                     infoWindow.open(map, this);
@@ -105,23 +121,24 @@ function myMap() {// map start
             }
 
         });
-
-
     };
+
     var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
     var inputAdress = document.getElementById('address');
     var autocomplete = new google.maps.places.Autocomplete(inputAdress);//adding autocomplete for input
-    //getAnimals();
+
     var checkArr = [];
     var image = 'http://maps.google.com/mapfiles/ms/icons/blue.png';//poly marker image
     var isClosed = false;//is used to check when polygon is closed
     var poly = new google.maps.Polyline({ map: map, path: [], strokeColor: "#FF0000", strokeOpacity: 1.0, strokeWeight: 2 });//poly options
     var ajaxBut = document.getElementById('ajaxcheck'); //try to save polygon markers location
+    //
     ajaxBut.addEventListener('click', function () {
         var temp = [];
         for (var i = 0; i < checkArr.length; i++) {  //loop to check animals markers
             temp.push([checkArr[i].lat, checkArr[i].lng]);
         }
+
         $.ajax({
             url: "/Home/SearchPoly",//polygon search ajax
             type: "post",
@@ -130,8 +147,6 @@ function myMap() {// map start
                 if (data.length === 0)
                     alert('empty array');
                 for (var i = 0; i < data.length; i++) {
-                    // alert(data[i].Animal.Name + ' ' + data[i].Animal.Latitude + ' ' + data[i].Animal.Longtitude);
-                    //console.log(data);
                     render(data[i]);
                 }
 
@@ -141,6 +156,7 @@ function myMap() {// map start
             }
         });
     });
+
     google.maps.event.addListener(map, 'click', function (clickEvent) {//adding polygon markers
         if (isClosed)
             return;
@@ -165,9 +181,10 @@ function myMap() {// map start
             poly.getPath().setAt(markerIndex, dragEvent.latLng);
         });
         poly.getPath().push(clickEvent.latLng);
-       
+
     });
     //function to clear markers before next serch (if it is needed
+
     function clearOverlays() {
         for (var i = 0; i < markersArray.length; i++) {
             markersArray[i].setMap(null);

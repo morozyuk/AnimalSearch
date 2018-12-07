@@ -29,13 +29,19 @@
     <br />
     @Html.EditorFor(model => model.Adress,
                     new { htmlAttributes = new { @id = "address" } })
+    <br />
+    @Html.HiddenFor(model => model.Longtitude,
+                    new { htmlAttributes = new { @id = "longtitude" } })
+    <br />
+    @Html.HiddenFor(model => model.Latitude,
+                    new { htmlAttributes = new { @id = "latitude" } })
     <br /><br />
     <p><input type="file" name="uploadImage" id="edit" /></p>
 
-    <p><input type="submit" value="Send" class="editCreatebutton" /></p>
+    <p><input type="submit" value="Send" class="editCreatebutton" id="Createbutton" /></p>
 </fieldset>
 }
 <div id="googleMap" style="width:100%;height:400px;"></div>
-<script src="~/Scripts/ForCreateEdit.js"></script>
+<script src="~/Scripts/SimpleMap.js"></script>
 
 <script src='http://maps.googleapis.com/maps/api/js?v=3&sensor=false&amp;libraries=places&key=AIzaSyAhnsDNCjvjyK3f_ctrPVdXoheSq2cckmQ&callback=myMap'></script>

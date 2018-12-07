@@ -9,13 +9,13 @@ namespace AnimalSearch.Repository
     
     public class UnitOfWork : IDisposable //uses to help us to work with repository and helps to use only one data context
     {
-        private AnimalContext db = new AnimalContext();
         public AnimalRepository animalRepository;
+        private AnimalContext db;
         public UnitOfWork(AnimalContext context)
         {
             db = context;
         }
-        //saves changes
+
         public void SaveChanges()
         {
             db.SaveChanges();
@@ -30,7 +30,7 @@ namespace AnimalSearch.Repository
                 return animalRepository;
             }
         }
-        //save data
+
         public void Save()
         {
             db.SaveChanges();
