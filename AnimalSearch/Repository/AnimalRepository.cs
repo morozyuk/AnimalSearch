@@ -117,7 +117,7 @@ namespace AnimalSearch.Repository
         /// <returns>animalDTO instance of searched animal by polygon</returns>
         public List<AnimalDto> SearchPoly(string[][] corners)
         {
-            List<AnimalPointDto> PloyPoints = new List<AnimalPointDto>();//list of polygon points
+            List<AnimalPointDto> PolyPoints = new List<AnimalPointDto>();//list of polygon points
 
 
             var animals = db.Animals
@@ -167,7 +167,7 @@ namespace AnimalSearch.Repository
                 // p is your point, p.x is the x coord, p.y is the y coord
                 if (!(p.Point.X < Xmin || p.Point.X > Xmax || p.Point.Y < Ymin || p.Point.Y > Ymax))//check what surrounds our point
                 {
-                    PloyPoints.Add(p);
+                    PolyPoints.Add(p);
 
                 }
                 else
@@ -176,7 +176,7 @@ namespace AnimalSearch.Repository
                 }
             }
             //class AnimalDTO is used to transfer all data into one  object
-            var result = PloyPoints.Select(x =>
+            var result = PolyPoints.Select(x =>
                 new AnimalDto()
                 {
                     Id = x.Animal.Id,
